@@ -9,8 +9,8 @@ import { IProduct } from '../models/iproduct';
 })
 export class ProductsService {
   constructor(private _httpClient: HttpClient) {}
-  getAllProducts(): Observable<IProduct> {
-    return this._httpClient.get<IProduct>(`${environment.baseUrl}/products`);
+  getAllProducts(): Observable<IProduct[]> {
+    return this._httpClient.get<IProduct[]>(`${environment.baseUrl}/products`);
   }
   addNewProduct(product:IProduct): Observable<IProduct> {
     return this._httpClient.post<IProduct>(`${environment.baseUrl}/products`,

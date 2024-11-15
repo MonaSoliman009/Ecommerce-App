@@ -1,5 +1,15 @@
 .mat-elevation-z8{
-  background-color: tomato;
   width: 90% !important;
   margin: auto;
+  .product_img{
+    width: 100px;
+    height: 100px;
+  }
+
+  .update_btn{
+    background-color: #28a745;
+  }
+  .delete_btn{
+    background-color: #dc3545;
+  }
 }

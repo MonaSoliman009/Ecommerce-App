@@ -29,5 +29,24 @@ export class GlobalService {
       timer: 1500,
 
     });
+
+  }
+
+  public messageConfirm(title: string, onDelete: Function) {
+    Swal.fire({
+      title: title,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Ok',
+      confirmButtonColor: "#3085d6",
+
+      cancelButtonText: 'Close',
+      cancelButtonColor: "#d33",
+
+    }).then((result) => {
+      if (result.value) {
+        onDelete();
+      }
+    });
   }
 }
