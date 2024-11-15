@@ -1,0 +1,70 @@
+<h2 mat-dialog-title>Add New Product</h2>
+<mat-dialog-content>
+  <form class="login_form" #prdForm="ngForm" >
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>Title</mat-label>
+        <input type="text" matInput placeholder="Please Enter Title" pattern="^[a-zA-Z]{3,25}$" required
+          #titleInp="ngModel" [(ngModel)]="product.title" name="title">
+      </mat-form-field>
+      @if(titleInp.invalid&&titleInp.touched){
+      @if(titleInp.hasError('required')){
+      <mat-error>Title is <strong>required</strong></mat-error>
+
+      }
+      @if(titleInp.hasError('pattern')){
+      <mat-error>Please enter a valid Title</mat-error>
+
+      }
+      }
+    </div>
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>Price</mat-label>
+
+        <input type="number" matInput placeholder="Please Enter price" pattern="^[0-9]{1,8}$" required
+          #priceInp="ngModel" [(ngModel)]="product.price" name="price">
+
+      </mat-form-field>
+      @if(priceInp.invalid&&priceInp.touched){
+      @if(priceInp.hasError('required')){
+      <mat-error>Price is <strong>required</strong></mat-error>
+
+      }
+      @if(priceInp.hasError('pattern')){
+      <mat-error>Please enter a valid Price</mat-error>
+
+      }
+      }
+    </div>
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+
+        <input type="text" matInput placeholder="Please Enter Description" pattern="^[A-Za-z]{5,100}$" required
+          #descriptionInp="ngModel" [(ngModel)]="product.description" name="description">
+
+      </mat-form-field>
+      @if(descriptionInp.invalid&&descriptionInp.touched){
+      @if(descriptionInp.hasError('required')){
+      <mat-error>Description is <strong>required</strong></mat-error>
+
+      }
+      @if(descriptionInp.hasError('pattern')){
+      <mat-error>Please enter a valid Description</mat-error>
+
+      }
+      }
+    </div>
+    <div class="button-container">
+      <button mat-flat-button type="submit" [disabled]="prdForm.invalid">
+        Add Product
+      </button>
+    </div>
+  </form>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="" cdkFocusInitial>Ok</button>
+</mat-dialog-actions>
