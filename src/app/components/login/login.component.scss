@@ -1,0 +1,36 @@
+
+.form_container{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .login_form{
+    // background-color: tomato;
+    width: 50%;
+
+    .form_caption{
+      margin-bottom: 3%;
+      h2{
+       margin: 0px !important;
+       font-weight: 500;
+       font-size: 45px;
+      }
+      p{
+       font-size: 14px !important;
+      }
+   }
+   mat-form-field{
+    width: 100%;
+    margin-top: 2% !important ;
+   }
+
+   .button-container{
+
+    button{
+      font-size: 18px;
+      width: 100% !important;
+     }
+   }
+  }
+
+}
