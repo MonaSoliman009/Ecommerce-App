@@ -4,6 +4,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatMenuModule} from '@angular/material/menu';
+import { UserRoleService } from '../../../services/user-role.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -14,4 +16,11 @@ import {MatMenuModule} from '@angular/material/menu';
 })
 export class NavbarComponent {
 
+  constructor(private _userRoleService:UserRoleService,private _router:Router){}
+
+  logout(){
+
+    this._userRoleService.clearRole();
+   this._router.navigate(['/login'])
+  }
 }

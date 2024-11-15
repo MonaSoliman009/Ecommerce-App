@@ -3,6 +3,7 @@ import { LoginComponent } from './components/login/login.component';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { MainLayoutComponent } from './components/main-layout/main-layout.component';
+import { adminGuard } from '../guards/admin.guard';
 
 export const routes: Routes = [
   {path:'',component:LoginComponent},
@@ -11,7 +12,7 @@ export const routes: Routes = [
     component: MainLayoutComponent,
 
     children: [
-      {path:'admin-dashboard',component:AdminDashboardComponent},
+      {path:'admin-dashboard',component:AdminDashboardComponent,canActivate:[adminGuard]},
 
     ],
   },

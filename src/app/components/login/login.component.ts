@@ -37,6 +37,7 @@ export class LoginComponent {
       this._userRoleService.setRole('user');
     } else if (formVal.email == 'admin' && formVal.password == 'admin') {
       this._userRoleService.setRole('admin');
+      this._router.navigate(['/admin-dashboard'])
     } else {
       this._globalService._messageAlert(
         MessageType.Error,
