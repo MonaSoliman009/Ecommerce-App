@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>Add New Product</h2>
 <mat-dialog-content>
-  <form class="login_form" #prdForm="ngForm" >
+  <form class="login_form" #prdForm="ngForm" (ngSubmit)="addNewProduct()">
     <div>
       <mat-form-field appearance="outline">
         <mat-label>Title</mat-label>
@@ -56,8 +56,50 @@
       }
       }
     </div>
+
+
+
+
+    <div>
+      <mat-form-field>
+        <mat-label>Category</mat-label>
+        <mat-select name="category" #categoryInp="ngModel" [(ngModel)]="product.category" required>
+          @for (cat of categories; track cat) {
+          <mat-option [value]="cat">{{cat}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      @if(categoryInp.invalid&&categoryInp.touched){
+      @if(categoryInp.hasError('required')){
+      <mat-error>Category is <strong>required</strong></mat-error>
+
+      }
+
+      }
+    </div>
+
+
+
+    <div class="file-upload-container">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="fileInput.click()"
+        type="button"
+      >
+        Choose File
+      </button>
+      <span *ngIf="selectedFile">{{ selectedFile.name }}</span>
+      <input
+        #fileInput
+        type="file"
+        hidden
+        (change)="onFileSelected($event)"
+      />
+    </div>
+
     <div class="button-container">
-      <button mat-flat-button type="submit" [disabled]="prdForm.invalid">
+      <button mat-button type="submit" [mat-dialog-close]="" cdkFocusInitial [disabled]="prdForm.invalid">
         Add Product
       </button>
     </div>
@@ -65,6 +107,6 @@
 
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="" cdkFocusInitial>Ok</button>
+  <button mat-button (click)="onNoClick()">Discard</button>
+  <!-- <button mat-button [mat-dialog-close]="" cdkFocusInitial>Ok</button> -->
 </mat-dialog-actions>
