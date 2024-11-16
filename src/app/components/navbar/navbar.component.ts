@@ -6,21 +6,30 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatMenuModule} from '@angular/material/menu';
 import { UserRoleService } from '../../../services/user-role.service';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { FormsModule } from '@angular/forms';
+import { LanguageService } from '../../../services/language.service';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [MatToolbarModule, MatButtonModule, MatIconModule,MatRadioModule,MatMenuModule],
+  imports: [MatToolbarModule, MatButtonModule, MatIconModule,MatRadioModule,
+    MatMenuModule,FormsModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
-
-  constructor(private _userRoleService:UserRoleService,private _router:Router){}
+language:string='en'
+  constructor(private _userRoleService:UserRoleService,
+    private _router:Router,private _translate: TranslateService,private _languageService:LanguageService){}
 
   logout(){
 
     this._userRoleService.clearRole();
    this._router.navigate(['/login'])
   }
+  useLanguage(): void {
+    this._languageService.changeLanguage(this.language)
+    this._translate.use(this.language);
+}
 }

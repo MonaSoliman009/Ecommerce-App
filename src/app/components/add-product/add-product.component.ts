@@ -17,6 +17,7 @@ import { CategoriesService } from '../../../services/categories.service';
 import { NgIf } from '@angular/common';
 import { ProductsService } from '../../../services/products.service';
 import { GlobalService, MessageType } from '../../../services/global.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-product',
@@ -31,6 +32,7 @@ import { GlobalService, MessageType } from '../../../services/global.service';
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
+    TranslateModule
   ],
   templateUrl: './add-product.component.html',
   styleUrl: './add-product.component.scss',

@@ -8,6 +8,7 @@ import { IUser } from '../../../models/iuser';
 import { UserRoleService } from '../../../services/user-role.service';
 import { GlobalService, MessageType } from '../../../services/global.service';
 import { Router } from '@angular/router';
+import {TranslateModule} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-login',
@@ -19,6 +20,7 @@ import { Router } from '@angular/router';
     ReactiveFormsModule,
     MatGridListModule,
     MatButtonModule,
+    TranslateModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',

@@ -15,10 +15,11 @@ import { ProductsService } from '../../../services/products.service';
 import { IProduct } from '../../../models/iproduct';
 import { GlobalService, MessageType } from '../../../services/global.service';
 import { AddProductComponent } from '../add-product/add-product.component';
+import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [MatTableModule, MatPaginatorModule,MatButtonModule],
+  imports: [MatTableModule, MatPaginatorModule,MatButtonModule,TranslateModule],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.scss',
 })

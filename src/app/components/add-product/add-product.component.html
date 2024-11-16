@@ -3,13 +3,13 @@
   <form class="login_form" #prdForm="ngForm" >
     <div>
       <mat-form-field appearance="outline">
-        <mat-label>Title</mat-label>
-        <input type="text" matInput placeholder="Please Enter Title"  required
+        <mat-label> {{'product_title'|translate}}</mat-label>
+        <input type="text" matInput placeholder="{{'title_msg'|translate}}"  required
           #titleInp="ngModel" [(ngModel)]="product.title" name="title">
       </mat-form-field>
       @if(titleInp.invalid&&titleInp.touched){
       @if(titleInp.hasError('required')){
-      <mat-error>Title is <strong>required</strong></mat-error>
+      <mat-error>{{'product_title_msg'|translate}}</mat-error>
 
       }
 
@@ -17,9 +17,10 @@
     </div>
     <div>
       <mat-form-field appearance="outline">
-        <mat-label>Price</mat-label>
+        <mat-label>{{'product_price'|translate}}</mat-label>
 
-        <input type="number" matInput placeholder="Please Enter price" pattern="^\d+(\.\d+)?$" required
+        <input type="number" matInput placeholder="{{'price_msg'|translate}}"
+         pattern="^\d+(\.\d+)?$" required
           #priceInp="ngModel" [(ngModel)]="product.price" name="price">
 
       </mat-form-field>
