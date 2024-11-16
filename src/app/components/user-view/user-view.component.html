@@ -1,0 +1,33 @@
+<mat-list class="horizontal-mat-list">
+  @for(cat of categories ;let idx=$index;track cat)
+  {
+  <mat-list-item class="item" [id]="idx" (click)="getCategoryProducts(cat)"
+
+  [class.selected]="cat === selectedCategory"
+ >
+    {{cat}}
+  </mat-list-item>
+  }
+</mat-list>
+
+
+<div class="card_container flex-container ">
+  @for(prd of products;track prd.id){
+
+  <mat-card class="flex-item" appearance="outlined">
+    <img mat-card-image [src]="prd.image" [alt]="prd.title">
+
+    <mat-card-header>
+      <mat-card-title>{{prd.title.slice(0,25)}}...</mat-card-title>
+      <mat-card-subtitle>EGP {{prd.price}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        {{prd.description.slice(0,100)}}...
+      </p>
+    </mat-card-content>
+
+  </mat-card>
+
+  }
+</div>

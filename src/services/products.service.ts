@@ -13,6 +13,10 @@ export class ProductsService {
     return this._httpClient.get<IProduct[]>(`${environment.baseUrl}/products`);
   }
 
+  getProductById(id:number): Observable<IProduct> {
+    return this._httpClient.get<IProduct>(`${environment.baseUrl}/products/${id}`);
+  }
+
   getProductsByCategoryName(category:string){
     return this._httpClient.get<IProduct[]>(`${environment.baseUrl}/products/category/${category}`);
 

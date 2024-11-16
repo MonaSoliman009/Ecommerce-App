@@ -79,10 +79,10 @@ export class AdminDashboardComponent implements AfterViewInit, OnInit {
   this._globalService.messageConfirm('Are you sure you want to delete this product',()=>{this.deleteProduct(id)})
 
   }
-  openDialog(): void {
+  openDialog(name:string,id:number|null): void {
     const dialogRef = this.dialog.open(AddProductComponent, {
       width: '800px',
-      // data: {name: this.name(), animal: this.animal()},
+      data: {name: name,id:id},
     });
 
     dialogRef.afterClosed().subscribe(result => {

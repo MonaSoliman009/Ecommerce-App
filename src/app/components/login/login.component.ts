@@ -35,6 +35,8 @@ export class LoginComponent {
 
     if (formVal.email == 'user' && formVal.password == 'user') {
       this._userRoleService.setRole('user');
+      this._router.navigate(['/user-view'])
+
     } else if (formVal.email == 'admin' && formVal.password == 'admin') {
       this._userRoleService.setRole('admin');
       this._router.navigate(['/admin-dashboard'])
