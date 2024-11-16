@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -16,6 +16,8 @@ import { IProduct } from '../../../models/iproduct';
 import { GlobalService, MessageType } from '../../../services/global.service';
 import { AddProductComponent } from '../add-product/add-product.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
@@ -23,10 +25,11 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.scss',
 })
-export class AdminDashboardComponent implements AfterViewInit, OnInit {
+export class AdminDashboardComponent implements AfterViewInit, OnInit,OnDestroy {
   products: IProduct[] = [] as IProduct[];
 
   readonly dialog = inject(MatDialog);
+  private destroy$: Subject<boolean> = new Subject<boolean>();
 
   displayedColumns: string[] = [
     'id',
@@ -50,7 +53,7 @@ export class AdminDashboardComponent implements AfterViewInit, OnInit {
     this.dataSource.paginator = this.paginator;
   }
   getAllProducts() {
-    this._productsService.getAllProducts().subscribe({
+    this._productsService.getAllProducts().pipe(takeUntil(this.destroy$)).subscribe({
       next: (res) => {
         this.products = res;
         this.dataSource.data=this.products;
@@ -64,7 +67,7 @@ export class AdminDashboardComponent implements AfterViewInit, OnInit {
   }
 
   deleteProduct(id:number){
-    this._productsService.deleteProduct(id).subscribe({
+    this._productsService.deleteProduct(id).pipe(takeUntil(this.destroy$)).subscribe({
       next:(res)=>{
 
        this._globalService._messageAlert(MessageType.Success,'Product deleted successfully')
@@ -92,5 +95,8 @@ export class AdminDashboardComponent implements AfterViewInit, OnInit {
       }
     });
   }
-
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.complete();
+  }
 }

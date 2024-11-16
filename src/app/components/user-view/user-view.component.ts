@@ -8,6 +8,8 @@ import { CategoriesService } from '../../../services/categories.service';
 import { ProductsService } from '../../../services/products.service';
 import { GlobalService, MessageType } from '../../../services/global.service';
 import { IProduct } from '../../../models/iproduct';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-user-view',
   standalone: true,
@@ -19,6 +21,8 @@ export class UserViewComponent implements OnInit {
   categories!: string[];
   selectedCategory!: string;
   products:IProduct[]=[] as IProduct[];
+  private destroy$: Subject<boolean> = new Subject<boolean>();
+
   constructor(
     private _categoriesService: CategoriesService,
     private _productsService: ProductsService,
@@ -29,7 +33,7 @@ export class UserViewComponent implements OnInit {
   }
 
   getAllCategories() {
-    this._categoriesService.getAllCategories().subscribe({
+    this._categoriesService.getAllCategories().pipe(takeUntil(this.destroy$)).subscribe({
       next: (res) => {
         console.log(res);
 
@@ -46,7 +50,7 @@ export class UserViewComponent implements OnInit {
   getCategoryProducts(catName: string) {
     this.selectedCategory = catName;
     this._productsService
-      .getProductsByCategoryName(this.selectedCategory)
+      .getProductsByCategoryName(this.selectedCategory).pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res) => {
           console.log(res);
@@ -56,5 +60,10 @@ export class UserViewComponent implements OnInit {
           this._globalService._messageAlert(MessageType.Error, err.message);
         },
       });
+
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 }

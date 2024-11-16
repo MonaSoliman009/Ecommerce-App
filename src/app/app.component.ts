@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '../services/language.service';
 import { NavbarComponent } from "./components/navbar/navbar.component";
-
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -12,9 +13,10 @@ import { NavbarComponent } from "./components/navbar/navbar.component";
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit,OnDestroy {
   title = 'ecommerce';
   lang: string = '';
+  private destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
     private _translate: TranslateService,
@@ -29,8 +31,12 @@ export class AppComponent implements OnInit {
   }
 
   getLanguage() {
-    this._languageService.getLanguage().subscribe((language) => {
+    this._languageService.getLanguage().pipe(takeUntil(this.destroy$)).subscribe((language) => {
       this.lang = language;
     });
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 }

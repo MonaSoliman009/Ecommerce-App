@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import {
@@ -19,6 +19,8 @@ import { ProductsService } from '../../../services/products.service';
 import { GlobalService, MessageType } from '../../../services/global.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from '../../../services/language.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-add-product',
@@ -38,10 +40,11 @@ import { LanguageService } from '../../../services/language.service';
   templateUrl: './add-product.component.html',
   styleUrl: './add-product.component.scss',
 })
-export class AddProductComponent implements OnInit {
+export class AddProductComponent implements OnInit ,OnDestroy{
   categories!: string[];
   selectedFile: File | null = null;
   lang: string = '';
+  private destroy$: Subject<boolean> = new Subject<boolean>();
 
   readonly data = inject<{name:string,id:number}>(MAT_DIALOG_DATA);
 
@@ -63,7 +66,7 @@ export class AddProductComponent implements OnInit {
     this.getLanguage()
   }
   getLanguage() {
-    this._languageService.getLanguage().subscribe((language) => {
+    this._languageService.getLanguage().pipe(takeUntil(this.destroy$)).subscribe((language) => {
       this.lang = language;
     });
   }
@@ -71,7 +74,7 @@ export class AddProductComponent implements OnInit {
     this.dialogRef.close();
   }
   getAllCategories() {
-    this._categoriesService.getAllCategories().subscribe({
+    this._categoriesService.getAllCategories().pipe(takeUntil(this.destroy$)).subscribe({
       next: (res) => {
         console.log(res);
 
@@ -103,7 +106,7 @@ export class AddProductComponent implements OnInit {
       formData.append('api_key', 'S7jdt06F3hO-3vCjHyyhjwj9EQI');
 
 
-      this._productsService.uploadProductImage(formData).subscribe({
+      this._productsService.uploadProductImage(formData).pipe(takeUntil(this.destroy$)).subscribe({
         next: (res) => {
           this.product.image=res.secure_url
           if(this.data.name=='Add'){
@@ -129,7 +132,7 @@ export class AddProductComponent implements OnInit {
 
   addNewProduct(){
 
-    this._productsService.addNewProduct(this.product).subscribe({
+    this._productsService.addNewProduct(this.product).pipe(takeUntil(this.destroy$)).subscribe({
       next:(res)=>{
         console.log(res);
         this._globalService._messageAlert(MessageType.Success,'Product Added Successfully')
@@ -142,7 +145,7 @@ export class AddProductComponent implements OnInit {
   }
 updateProduct(){
 
-  this._productsService.updateProduct(this.data.id,this.product).subscribe({
+  this._productsService.updateProduct(this.data.id,this.product).pipe(takeUntil(this.destroy$)).subscribe({
     next:(res)=>{
       console.log(res);
       this._globalService._messageAlert(MessageType.Success,'Product Updates Successfully')
@@ -154,7 +157,7 @@ updateProduct(){
   })
 }
   getProductById(id:number){
-    this._productsService.getProductById(id).subscribe({
+    this._productsService.getProductById(id).pipe(takeUntil(this.destroy$)).subscribe({
       next:(res)=>{
         console.log(res);
         this.product=res
@@ -163,5 +166,9 @@ updateProduct(){
       }
     })
 
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 }

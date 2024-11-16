@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { LanguageService } from '../../../services/language.service';
-
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-navbar',
   standalone: true,
@@ -25,9 +26,11 @@ import { LanguageService } from '../../../services/language.service';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit,OnDestroy {
   lang: string = '';
 isLoggedIn:boolean=false
+private destroy$: Subject<boolean> = new Subject<boolean>();
+
   constructor(
     private _userRoleService: UserRoleService,
     private _router: Router,
@@ -39,12 +42,12 @@ isLoggedIn:boolean=false
     this.getLoggedInStatus()
   }
   getLanguage() {
-    this._languageService.getLanguage().subscribe((language) => {
+    this._languageService.getLanguage().pipe(takeUntil(this.destroy$)).subscribe((language) => {
       this.lang = language;
     });
   }
   getLoggedInStatus(){
-    this._userRoleService.getLoggedIn().subscribe((status)=>{
+    this._userRoleService.getLoggedIn().pipe(takeUntil(this.destroy$)).subscribe((status)=>{
       console.log(status);
       this.isLoggedIn=(status)?true:false
 
@@ -57,5 +60,10 @@ isLoggedIn:boolean=false
   useLanguage(): void {
     this._languageService.changeLanguage(this.lang);
     this._translate.use(this.lang);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 }
