@@ -1,5 +1,10 @@
 
 <div [dir]="(lang=='en')?'ltr':'rtl'">
-  <router-outlet></router-outlet>
+  <app-navbar></app-navbar>
+  <div class="layout_container">
+    <router-outlet></router-outlet>
+
+  </div>
+
 </div>
 

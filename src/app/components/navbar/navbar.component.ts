@@ -20,13 +20,14 @@ import { LanguageService } from '../../../services/language.service';
     MatRadioModule,
     MatMenuModule,
     FormsModule,
+
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent implements OnInit {
   lang: string = '';
-
+isLoggedIn:boolean=false
   constructor(
     private _userRoleService: UserRoleService,
     private _router: Router,
@@ -35,11 +36,19 @@ export class NavbarComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.getLanguage();
+    this.getLoggedInStatus()
   }
   getLanguage() {
     this._languageService.getLanguage().subscribe((language) => {
       this.lang = language;
     });
+  }
+  getLoggedInStatus(){
+    this._userRoleService.getLoggedIn().subscribe((status)=>{
+      console.log(status);
+      this.isLoggedIn=(status)?true:false
+
+    })
   }
   logout() {
     this._userRoleService.clearRole();

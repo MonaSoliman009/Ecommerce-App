@@ -1,3 +1,6 @@
 mat-toolbar{
   justify-content: space-between;
 }
+::ng-deep.mat-mdc-menu-panel{
+  overflow: hidden !important;
+}

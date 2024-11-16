@@ -9,6 +9,10 @@ import { UserRoleService } from '../../../services/user-role.service';
 import { GlobalService, MessageType } from '../../../services/global.service';
 import { Router } from '@angular/router';
 import {TranslateModule} from "@ngx-translate/core";
+import { MatIconModule } from '@angular/material/icon';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-login',
@@ -20,13 +24,18 @@ import {TranslateModule} from "@ngx-translate/core";
     ReactiveFormsModule,
     MatGridListModule,
     MatButtonModule,
-    TranslateModule
+    TranslateModule,
+    MatIconModule,
+    MatRadioModule,
+    MatMenuModule,
+    MatToolbarModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
   user: IUser = {} as IUser;
+
   constructor(
     private _userRoleService: UserRoleService,
     private _globalService: GlobalService,
