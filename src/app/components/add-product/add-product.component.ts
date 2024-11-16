@@ -18,6 +18,7 @@ import { NgIf } from '@angular/common';
 import { ProductsService } from '../../../services/products.service';
 import { GlobalService, MessageType } from '../../../services/global.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { LanguageService } from '../../../services/language.service';
 
 @Component({
   selector: 'app-add-product',
@@ -40,6 +41,8 @@ import { TranslateModule } from '@ngx-translate/core';
 export class AddProductComponent implements OnInit {
   categories!: string[];
   selectedFile: File | null = null;
+  lang: string = '';
+
   readonly data = inject<{name:string,id:number}>(MAT_DIALOG_DATA);
 
   product: IProduct = {} as IProduct;
@@ -47,17 +50,23 @@ export class AddProductComponent implements OnInit {
   constructor(
     private _categoriesService: CategoriesService,
     private _productsService: ProductsService,
-    private _globalService:GlobalService
+    private _globalService:GlobalService,
+    private _languageService:LanguageService
   ) {}
   ngOnInit(): void {
-    console.log(this.data);
+
     if(this.data.id){
       this.getProductById(this.data.id)
     }
 
     this.getAllCategories();
+    this.getLanguage()
   }
-
+  getLanguage() {
+    this._languageService.getLanguage().subscribe((language) => {
+      this.lang = language;
+    });
+  }
   onNoClick(): void {
     this.dialogRef.close();
   }

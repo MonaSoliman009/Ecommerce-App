@@ -1,113 +1,119 @@
-<h2 mat-dialog-title>Add New Product</h2>
-<mat-dialog-content>
-  <form class="login_form" #prdForm="ngForm" >
-    <div>
-      <mat-form-field appearance="outline">
-        <mat-label> {{'product_title'|translate}}</mat-label>
-        <input type="text" matInput placeholder="{{'title_msg'|translate}}"  required
-          #titleInp="ngModel" [(ngModel)]="product.title" name="title">
-      </mat-form-field>
-      @if(titleInp.invalid&&titleInp.touched){
-      @if(titleInp.hasError('required')){
-      <mat-error>{{'product_title_msg'|translate}}</mat-error>
+<div [dir]="(lang=='en')?'ltr':'rtl'">
+  <h2 mat-dialog-title> {{'add_new_product'|translate}}</h2>
+  <mat-dialog-content >
+    <form class="login_form" #prdForm="ngForm" >
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label> {{'product_title'|translate}}</mat-label>
+          <input type="text" matInput placeholder="{{'titel_msg'|translate}}"  required
+            #titleInp="ngModel" [(ngModel)]="product.title" name="title">
+        </mat-form-field>
+        @if(titleInp.invalid&&titleInp.touched){
+        @if(titleInp.hasError('required')){
+        <mat-error>{{'product_title_msg'|translate}}</mat-error>
 
-      }
+        }
 
-      }
-    </div>
-    <div>
-      <mat-form-field appearance="outline">
-        <mat-label>{{'product_price'|translate}}</mat-label>
+        }
+      </div>
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>{{'product_price'|translate}}</mat-label>
 
-        <input type="number" matInput placeholder="{{'price_msg'|translate}}"
-         pattern="^\d+(\.\d+)?$" required
-          #priceInp="ngModel" [(ngModel)]="product.price" name="price">
+          <input type="number" matInput placeholder="{{'price_msg'|translate}}"
+           pattern="^\d+(\.\d+)?$" required
+            #priceInp="ngModel" [(ngModel)]="product.price" name="price">
 
-      </mat-form-field>
-      @if(priceInp.invalid&&priceInp.touched){
-      @if(priceInp.hasError('required')){
-      <mat-error>Price is <strong>required</strong></mat-error>
+        </mat-form-field>
+        @if(priceInp.invalid&&priceInp.touched){
+        @if(priceInp.hasError('required')){
+        <mat-error>Price is <strong>required</strong></mat-error>
 
-      }
-      @if(priceInp.hasError('pattern')){
-      <mat-error>Please enter a valid Price</mat-error>
+        }
+        @if(priceInp.hasError('pattern')){
+        <mat-error>Please enter a valid Price</mat-error>
 
-      }
-      }
-    </div>
-    <div>
-      <mat-form-field appearance="outline">
-        <mat-label>Description</mat-label>
+        }
+        }
+      </div>
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>{{'product_description'|translate}}</mat-label>
 
-        <input type="text" matInput placeholder="Please Enter Description"
-         required
-          #descriptionInp="ngModel" [(ngModel)]="product.description" name="description">
+          <input type="text" matInput placeholder="{{'product_descriprion_msg'|translate}}"
+           required
+            #descriptionInp="ngModel" [(ngModel)]="product.description" name="description">
 
-      </mat-form-field>
-      @if(descriptionInp.invalid&&descriptionInp.touched){
-      @if(descriptionInp.hasError('required')){
-      <mat-error>Description is <strong>required</strong></mat-error>
+        </mat-form-field>
+        @if(descriptionInp.invalid&&descriptionInp.touched){
+        @if(descriptionInp.hasError('required')){
+        <mat-error>{{'product_descriprion_err'|translate}}</mat-error>
 
-      }
-      <!-- @if(descriptionInp.hasError('pattern')){
-      <mat-error>Please enter a valid Description</mat-error>
+        }
+        <!-- @if(descriptionInp.hasError('pattern')){
+        <mat-error>Please enter a valid Description</mat-error>
 
-      } -->
-      }
-    </div>
-
-
-
-
-    <div>
-      <mat-form-field>
-        <mat-label>Category</mat-label>
-        <mat-select name="category" #categoryInp="ngModel" [(ngModel)]="product.category" required>
-          @for (cat of categories; track cat) {
-          <mat-option [value]="cat">{{cat}}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-      @if(categoryInp.invalid&&categoryInp.touched){
-      @if(categoryInp.hasError('required')){
-      <mat-error>Category is <strong>required</strong></mat-error>
-
-      }
-
-      }
-    </div>
+        } -->
+        }
+      </div>
 
 
 
-    <div class="file-upload-container">
+
+      <div>
+        <mat-form-field>
+          <mat-label>{{'product_category'|translate}}</mat-label>
+          <mat-select name="category" #categoryInp="ngModel" [(ngModel)]="product.category" required>
+            @for (cat of categories; track cat) {
+            <mat-option [value]="cat">{{cat}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        @if(categoryInp.invalid&&categoryInp.touched){
+        @if(categoryInp.hasError('required')){
+        <mat-error>{{'product_category_err'|translate}}</mat-error>
+
+        }
+
+        }
+      </div>
+
+
+
+      <div class="file-upload-container">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="fileInput.click()"
+          type="button"
+        >
+        {{'choose_file'|translate}}
+        </button>
+        <span *ngIf="selectedFile">{{ selectedFile.name }}</span>
+        <input
+          #fileInput
+          type="file"
+          hidden
+          (change)="onFileSelected($event)"
+        />
+      </div>
+
+
+    </form>
+
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">{{'discard'|translate}}</button>
+    <div class="button-container">
       <button
-        mat-raised-button
-        color="primary"
-        (click)="fileInput.click()"
-        type="button"
-      >
-        Choose File
+      (click)="uploadFile()"
+      mat-button type="submit" [mat-dialog-close]=""
+      cdkFocusInitial [disabled]="prdForm.invalid">
+        {{(lang=='en')?data.name:(data.name=='Add')?'اضافة':'تعديل'}}
       </button>
-      <span *ngIf="selectedFile">{{ selectedFile.name }}</span>
-      <input
-        #fileInput
-        type="file"
-        hidden
-        (change)="onFileSelected($event)"
-      />
     </div>
+  </mat-dialog-actions>
+
+</div>
 
 
-  </form>
-
-</mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Discard</button>
-  <div class="button-container">
-    <button
-    (click)="uploadFile()"
-    mat-button type="submit" [mat-dialog-close]="" cdkFocusInitial [disabled]="prdForm.invalid">
-      {{data.name}} Product
-    </button>
-  </div>
-</mat-dialog-actions>

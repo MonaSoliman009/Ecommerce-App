@@ -11,17 +11,27 @@
   "password_err2":"Please enter a valid password",
   "add_new_product":"Add New Product",
   "product_title":"Title",
+  "titel_msg":"Please enter title",
+
   "product_price":"Price",
+  "price_msg":"Please enter price",
+
   "product_image":"Image",
   "product_category":"Category",
+  "product_category_err":"Category is required",
+
+  "product_description":"Descriprion",
+  "product_descriprion_err":"Description is required",
+  "product_descriprion_msg":"Please enter description",
   "product_id":"ID",
-  "product_name_msg":"Product Name is required",
+  "product_title_msg":"Product title is required",
   "product_price_msg":"Product Price is required",
   "product_name_err":"Product Name is required",
   "product_price_err":"Product Price is required",
   "product_price_err2":"Please enter a valid price",
   "edit_product":"Update",
   "delete_product":"Delete",
-  "discard":"Discard"
+  "discard":"Discard",
+  "choose_file":"Choose File"
 
 }
