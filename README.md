@@ -1,27 +1,89 @@
-# Ecommerce
+Angular E-Commerce Store
+This is a basic e-commerce web application built with Angular, Angular Material, and Sass. The app provides a seamless shopping experience with distinct roles for Admin and User. Admins can manage products (add, update, delete), while Users can explore and filter products by categories.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.11.
 
-## Development server
+Features
+Login Display
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Static Login Credentials:
+User:
+Username: user
+Password: user
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
+Admin:
+Username: admin
+Password: admin
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Basic authentication logic determines the user's role and privileges.
 
-## Running end-to-end tests
+Role-Based Views
+Admin View
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Further help
+Display all products in a table with pagination for better data management.
+CRUD functionality:
+Add new products (with image upload via Cloudinary).
+Update existing products.
+Delete products.
+Fully interactive, role-restricted admin page.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+-----------------------
+User View
+Show products grouped by categories.
+Include a filtering section for better navigation of products.
+Loading animations while fetching data for a smooth user experience.
+Dynamic product display with animations for transitions.
+Each product card provides detailed product information.
+
+
+
+Technology Stack
+Angular: Frontend framework.
+Angular Material: For UI components like tables, modals, and forms.
+Sass: For styling and efficient design.
+Cloudinary: For uploading and managing product images.
+
+
+
+Installation and Setup
+
+Navigate to the project folder:
+cd angular-ecommerce-store
+
+
+Install dependencies:
+npm install
+
+
+
+Run the application:
+ng serve
+
+
+Access the application at:
+http://localhost:4200
+
+
+
+Folder Structure
+
+src/
+├── app/
+│   ├── components/           # Reusable components (e.g., product card, category display)
+│   ├── services/             # API integrations and authentication services
+│   ├── models/               # Data models (e.g., Product, Category, User)
+│   ├── guards/               # Route guards for role-based access
+├── environments/             # Environment-specific configuration
+└── assets/                   # Images and static files
+
+
+Deployment
+Use the following command to build the app for production:
+ng build --prod
+
+
